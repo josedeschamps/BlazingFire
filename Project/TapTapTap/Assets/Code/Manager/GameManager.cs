@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using DG.Tweening;
 
 public class GameManager : MonoBehaviour
@@ -35,20 +36,36 @@ public class GameManager : MonoBehaviour
         set { currency = value; }
     }
 
+    public float _score
+    {
+        get { return score; }
+        set { score = value; }
+    }
+
 
 
 
     [Header("Game Currency & Game Time")]
-    public float currency;
+    [Tooltip("Attribute Setting of the Game")]
+    public float currency = 0;
+    public float score = 0;
+    public int user = 0;
 
-    [Tooltip("This hold all the assets in the game")]
+
     [Header("Asset Holder")]
+    [Tooltip("This hold all the assets in the game")]
     public GameObject[] basicEnemyPrefab;
     public GameObject[] shootingEnemyPrefab;
     public GameObject[] civilianPrefab;
 
-    [Tooltip("Controls & asset holder for waves and Prefabs")]
+    [Header("PlayerSetting")]
+    [Tooltip("Holds All The Player Info and Objects")]
+    public Transform Player;
+    public float duckSpeed;
+
+
     [Header("Wave Setting & Holder")]
+    [Tooltip("Controls & asset holder for waves and Prefabs")]
     public int totalWaveAmount = 100;
     [HideInInspector]
     public List<GameObject> startWave;
@@ -56,7 +73,10 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("This hold all the UI Elements of the game")]
     [Header("HUD Setting")]
+    public Button startButton;
+    private bool hasBeenClicked = false;
     public Slider slideCountDownTime;
+    public TMP_Text scoreText;
     public float _gameTime
     {
         get { return gameTime; }
@@ -85,22 +105,32 @@ public class GameManager : MonoBehaviour
     public bool buttonPressed;
     public bool pauseWave = false;
 
+    //Touch input
+    private Touch touch;
+    private Vector2 beginTouchPostion, endTouchPosition;
 
+
+ 
     private void Start()
     {
         startWave = new List<GameObject>();
-        DOTween.Init();
+        scoreText.text = _score.ToString();
         LoadStartWave();
-        GameSystem(GameModeSetting.BasicMode);
+        DOTween.Init();
+
+
 
 
     }
     private void Update()
     {
-
+        TouchInputSystem();
         GameTimeDisplaySystem();
     }
 
+
+
+    //game mode setting
     private void GameSystem(GameModeSetting setting)
     {
 
@@ -118,6 +148,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    //Game countdown display
     private void GameTimeDisplaySystem()
     {
         gameTime -= Time.deltaTime;
@@ -130,15 +161,58 @@ public class GameManager : MonoBehaviour
         slideCountDownTime.value = gameTime;
 
     }
+    //Mobile input setting
+    private void TouchInputSystem()
+    {
+        if (Input.touchCount > 0)
+        {
+            touch = Input.GetTouch(0);
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
 
+                    beginTouchPostion = touch.position;
+                    //if (touch.position.x < Screen.width / 2)
+                    //{
+                    //    if (Input.GetTouch(0).phase == TouchPhase.Began)
+                    //    {
+                    //        beginTouchPostion = touch.position;
+                    //    }
+                    //}
+
+                    break;
+                case TouchPhase.Ended:
+                    endTouchPosition = touch.position;
+                    if (beginTouchPostion != endTouchPosition)
+                    {
+                        PlayerDuckAction();
+                    }
+                    break;
+            }
+        }
+    }
+    private void PlayerDuckAction()
+    {
+        PerformAbility();
+ 
+    }
+    void PerformAbility()
+    {
+
+        Player.DOLocalMoveY(-5f, 0.25f).SetEase(Ease.OutQuad).OnComplete(ResetAbility);
+    }
+    void ResetAbility()
+    {
+        Player.DOLocalMoveY(-3f, 0.25f).SetEase(Ease.InQuad);
+    }
+
+    //Spawn system
     private void SpawnWave()
     {
         StartCoroutine(SpawningWave());
     }
     IEnumerator SpawningWave()
     {
-        yield return new WaitForSeconds(2f);
-
         WaitForSeconds wait = new WaitForSeconds(1f);
         for (int i = 0; i < totalWaveAmount; i++)
         {
@@ -150,11 +224,10 @@ public class GameManager : MonoBehaviour
             yield return wait;
         }
 
-    
-           
+
+
 
     }
-
     private void LoadStartWave()
     {
 
@@ -165,6 +238,39 @@ public class GameManager : MonoBehaviour
         }
 
     }
+
+    //Display score
+    public void ScoreDisplay()
+    {
+        scoreText.text = _score.ToString();
+        scoreText.DOFade(255f, 0.25f).SetEase(Ease.InQuad);
+        scoreText.transform.DOScale(new Vector3(1.1f, 1.1f, 1), 0.25f).SetEase(Ease.InElastic).OnComplete(ResetScoreDisplayAnimation);
+    }
+    void ResetScoreDisplayAnimation()
+    {
+        scoreText.transform.DOScale(new Vector3(1f, 1f, 1), 0.25f).SetEase(Ease.OutElastic);
+        scoreText.DOFade(0f, 0.25f).SetEase(Ease.OutQuad);
+    }
+  
+
+    //Starting the game setting
+    public void StartGame()
+    {
+        if (!hasBeenClicked)
+        {
+            StartCoroutine(LoadGame());
+            Handheld.Vibrate();
+            hasBeenClicked = true;
+
+        }
+    }
+    IEnumerator LoadGame()
+    {
+        startButton.transform.DOLocalMoveY(1000f, 0.25f).SetEase(Ease.OutBounce);
+        yield return new WaitForSeconds(1.5f);
+        GameSystem(GameModeSetting.BasicMode);
+    }
+
 
 
 

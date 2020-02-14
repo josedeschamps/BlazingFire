@@ -565,7 +565,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1470270117}
   m_CullTransparentMesh: 0
---- !u!1 &1763807376
+--- !u!1 &1790259172
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -573,21 +573,34 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1763807377}
+  - component: {fileID: 1790259174}
+  - component: {fileID: 1790259173}
   m_Layer: 0
-  m_Name: Tester
+  m_Name: '[SaveDataManager]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1763807377
+--- !u!114 &1790259173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790259172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 832a765c6fbd142a7aa14b725c0a7034, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1790259174
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1763807376}
+  m_GameObject: {fileID: 1790259172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 547.91394, y: 1556.8228, z: -1513.5306}
   m_LocalScale: {x: 1, y: 1, z: 1}

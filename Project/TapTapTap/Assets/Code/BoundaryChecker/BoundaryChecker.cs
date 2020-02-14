@@ -21,6 +21,8 @@ public class BoundaryChecker : MonoBehaviour
             float tmp;
             tmp = collision.gameObject.GetComponent<EnemyMotor>().scorePoint;
             gm._gameTime += tmp;
+            gm._score += tmp;
+            gm.ScoreDisplay();
             Debug.Log("HasShot" + tmp);
         }
     }
