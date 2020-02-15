@@ -5,31 +5,19 @@ using DG.Tweening;
 
 public class EnemyMotor : MonoBehaviour
 {
-    //[System.Serializable]
-    //public class EnemyStats
-    //{
-
-    //    public float aliveTime = 1f;
-    //    public float ShootSpeed = 1f;
-    //    public bool canShoot = false;
-    //    public bool hasDoubleShot = false;
-    //    public float scorePoint = 1f;
-    //    public float currency;
-      
-    //}
-    //public EnemyStats stats;
     private GameManager gm;
+    private CameraShakeMotor cam;
     private Transform body;
+    [Header("Enemy Setting")]
+    [Tooltip("These control the enemy attribute.")]
     public float aliveTime = 1f;
     public float ShootSpeed = 1f;
     public bool canShoot = false;
     public bool hasDoubleShot = false;
+    [Header("Reward Setting")]
+    [Tooltip("In Game rewards setting and values")]
     public float scorePoint = 1f;
     public float currency;
-
-
-
-
 
 
 
@@ -38,14 +26,11 @@ public class EnemyMotor : MonoBehaviour
         DOTween.Init();
         //stats = new EnemyStats();
         gm = FindObjectOfType<GameManager>();
+        cam = FindObjectOfType<CameraShakeMotor>();
         body = GetComponent<Transform>();
         Movement();
        
     }
-
-
-
-
     private void Movement()
     {
         StartCoroutine(BeginMovement());
@@ -67,10 +52,10 @@ public class EnemyMotor : MonoBehaviour
             yield return new WaitForSeconds(1f);
             Destroy(gameObject);
         }
-        else
-        {
-            StopAllCoroutines();
-        }
+        //else
+        //{
+        //    StopAllCoroutines();
+        //}
 
     }
 
@@ -78,12 +63,16 @@ public class EnemyMotor : MonoBehaviour
     {
         StartCoroutine(DeathAnimation());
     }
-
     IEnumerator DeathAnimation()
     {
+        StopCoroutine(BeginMovement());
         transform.DOScale(new Vector3(1.5f, 1.5f, 1f), 0.25f).SetEase(Ease.OutElastic);
+        cam.ShakeCamera(0.1f, 0.1f);
         yield return new WaitForSeconds(.3f);
+     
+        cam.ResetPosition();
         Destroy(gameObject);
+
 
     }
 
