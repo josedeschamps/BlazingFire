@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Cinemachine;
 
 public class EnemyMotor : MonoBehaviour
 {
@@ -67,12 +68,14 @@ public class EnemyMotor : MonoBehaviour
     {
         StopCoroutine(BeginMovement());
         transform.DOScale(new Vector3(1.5f, 1.5f, 1f), 0.25f).SetEase(Ease.OutElastic);
-        cam.ShakeCamera(0.1f, 0.1f);
+       
+        cam.ShakeCamera(0.02f, 0.1f);
         yield return new WaitForSeconds(.3f);
      
         cam.ResetPosition();
         Destroy(gameObject);
 
+        
 
     }
 

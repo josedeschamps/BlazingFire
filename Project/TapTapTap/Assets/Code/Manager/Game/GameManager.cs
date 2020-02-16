@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 
+
 public class GameManager : MonoBehaviour
 {
 
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
     private bool hasBeenClicked = false;
     public Slider slideCountDownTime;
     public Image sliderColorBar;
+    private bool resetGameTimer = true;
     public TMP_Text scoreText;
     public float _gameTime
     {
@@ -102,13 +104,18 @@ public class GameManager : MonoBehaviour
     }
     public float gameTime = 100f;
 
-    //[HideInInspector]
+    [Header("Game Over Setting")]
+    public GameObject gameoverDisplay;
+
+    [HideInInspector]
     public bool buttonPressed;
     public bool pauseWave = false;
 
     //Touch input
     private Touch touch;
     private Vector2 beginTouchPostion, endTouchPosition;
+
+ 
 
 
 
@@ -118,7 +125,6 @@ public class GameManager : MonoBehaviour
         scoreText.text = _score.ToString();
         LoadStartWave();
         DOTween.Init();
-
 
 
 
@@ -152,23 +158,29 @@ public class GameManager : MonoBehaviour
     //Game countdown display
     private void GameTimeDisplaySystem()
     {
-        gameTime -= Time.deltaTime;
 
-        if (gameTime < 0)
+        if (!resetGameTimer)
         {
-            //do something;
-        }
+            gameTime -= Time.deltaTime;
 
-        slideCountDownTime.value = gameTime;
+            if (gameTime < 0)
+            {
+                GameOver();
+                ResetGame();
+            }
 
-        if (slideCountDownTime.value <10)
-        {
-            sliderColorBar.color = Color.red;
-        }
-        else
-        {
+            slideCountDownTime.value = gameTime;
 
-            sliderColorBar.color = new Color(0f, 198f, 255f);
+            if (slideCountDownTime.value < 5)
+            {
+                sliderColorBar.color = Color.red;
+            }
+            else
+            {
+
+                sliderColorBar.color = new Color(0f, 198f, 255f);
+            }
+
         }
 
     }
@@ -270,9 +282,14 @@ public class GameManager : MonoBehaviour
         if (!hasBeenClicked)
         {
             StartCoroutine(LoadGame());
+            resetGameTimer = false;
             Handheld.Vibrate();
             hasBeenClicked = true;
 
+            if (gameoverDisplay.activeSelf == true)
+            {
+                gameoverDisplay.SetActive(false);
+            }
         }
     }
     IEnumerator LoadGame()
@@ -283,6 +300,19 @@ public class GameManager : MonoBehaviour
     }
 
 
+    public void GameOver()
+    {
+        gameoverDisplay.SetActive(true);
+        StopAllCoroutines();
+    }
 
+    private void ResetGame()
+    {
+        resetGameTimer = true;
+        gameTime = 25f;
+        startWave.Clear();
+        LoadStartWave();
+        hasBeenClicked = false;
+    }
 
 }
