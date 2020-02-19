@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using Cinemachine;
+
 
 public class EnemyMotor : MonoBehaviour
 {
@@ -17,7 +17,8 @@ public class EnemyMotor : MonoBehaviour
     public bool hasDoubleShot = false;
     [Header("Reward Setting")]
     [Tooltip("In Game rewards setting and values")]
-    public float scorePoint = 1f;
+    public int scorePoint = 1;
+    public int killScore = 1;
     public float currency;
 
 
@@ -41,7 +42,9 @@ public class EnemyMotor : MonoBehaviour
 
         if(body==null)
         {
+         
             yield return BeginMovement();
+           
         }
 
         transform.DOMoveX(0f, 0.5f, true).SetEase(Ease.InOutExpo);
@@ -53,10 +56,11 @@ public class EnemyMotor : MonoBehaviour
             yield return new WaitForSeconds(1f);
             Destroy(gameObject);
         }
-        //else
-        //{
-        //    StopAllCoroutines();
-        //}
+        else
+        {
+            Destroy(gameObject);
+        }
+  
 
     }
 

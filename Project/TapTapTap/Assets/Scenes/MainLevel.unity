@@ -225,7 +225,6 @@ Transform:
   - {fileID: 1926320838}
   - {fileID: 457719087}
   - {fileID: 1635540287}
-  - {fileID: 511605685}
   - {fileID: 300980275}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -259,7 +258,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 172060956}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &300980276
 MonoBehaviour:
@@ -794,49 +793,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 504950726}
   m_CullTransparentMesh: 0
---- !u!1 &511605684
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 511605685}
-  - component: {fileID: 511605686}
-  m_Layer: 0
-  m_Name: SaveData Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &511605685
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511605684}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 172060956}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &511605686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 511605684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832a765c6fbd142a7aa14b725c0a7034, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &871767012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,15 +1814,13 @@ MonoBehaviour:
   currency: 0
   score: 0
   user: 0
-  basicEnemyPrefab:
-  - {fileID: 5305651250943611636, guid: c5fad385973aa4b7badb7a9fd9231dd6, type: 3}
+  allgameAssetsPrefab:
   - {fileID: 5305651250943611636, guid: 7e666f8df62644c0b9c4053a4265fcd0, type: 3}
   - {fileID: 5305651250943611636, guid: 45dab9753f6834a52b23910c42864049, type: 3}
-  - {fileID: 5305651250943611636, guid: 45dab9753f6834a52b23910c42864049, type: 3}
-  shootingEnemyPrefab:
-  - {fileID: 0}
-  civilianPrefab:
-  - {fileID: 0}
+  - {fileID: 5305651250943611636, guid: c5fad385973aa4b7badb7a9fd9231dd6, type: 3}
+  - {fileID: 5305651250943611636, guid: 37fc04f5958c0495d84e80e88ae51260, type: 3}
+  - {fileID: 5305651250943611636, guid: a930535c97a5446cda5eb5f30d45e693, type: 3}
+  - {fileID: 5305651250943611636, guid: abe7c820e5736450a9c559cd50dfe919, type: 3}
   Player: {fileID: 1107786168}
   duckSpeed: 0
   totalWaveAmount: 100
@@ -1878,6 +1832,7 @@ MonoBehaviour:
   scoreText: {fileID: 1379822978}
   gameTime: 25
   gameoverDisplay: {fileID: 1288754994}
+  killscoreText: {fileID: 1152187842}
   buttonPressed: 0
   pauseWave: 0
 --- !u!1 &1288754994
@@ -2241,7 +2196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c57f99d72c4a7433d9c89a24d42a9b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickRate: 0.5
+  clickRate: 0.01
 --- !u!61 &1437909830
 BoxCollider2D:
   m_ObjectHideFlags: 0

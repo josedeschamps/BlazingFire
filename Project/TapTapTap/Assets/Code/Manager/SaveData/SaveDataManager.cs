@@ -20,18 +20,18 @@ public class SaveDataManager : MonoBehaviour
 
     public void SaveAllData()
     {
-        PlayerPrefs.SetInt("user", gm.user);
-        PlayerPrefs.SetFloat("Score", gm._score);
-        PlayerPrefs.SetFloat("Currency", gm._currency);
+        //PlayerPrefs.SetInt("user", gm.user);
+        //PlayerPrefs.SetFloat("Score", gm._score);
+        //PlayerPrefs.SetFloat("Currency", gm._currency);
 
 
     }
 
     public void LoadAllData()
     {
-        gm.user = PlayerPrefs.GetInt("user", gm.user);
-        gm._score = PlayerPrefs.GetFloat("Score", gm._score);
-        gm._currency = PlayerPrefs.GetFloat("Currency", gm._currency);
+        //gm.user = PlayerPrefs.GetInt("user", gm.user);
+        //gm._score = PlayerPrefs.GetFloat("Score", gm._score);
+        //gm._currency = PlayerPrefs.GetFloat("Currency", gm._currency);
     }
 
 }

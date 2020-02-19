@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
         set { currency = value; }
     }
 
-    public float _score
+    public int _score
     {
         get { return score; }
         set { score = value; }
@@ -49,15 +49,14 @@ public class GameManager : MonoBehaviour
     [Header("Game Currency & Game Time")]
     [Tooltip("Attribute Setting of the Game")]
     public float currency = 0;
-    public float score = 0;
+    public int score = 0;
     public int user = 0;
 
 
     [Header("Asset Holder")]
     [Tooltip("This hold all the assets in the game")]
-    public GameObject[] basicEnemyPrefab;
-    public GameObject[] shootingEnemyPrefab;
-    public GameObject[] civilianPrefab;
+    public GameObject[] allgameAssetsPrefab;
+
 
     [Header("PlayerSetting")]
     [Tooltip("Holds All The Player Info and Objects")]
@@ -89,9 +88,9 @@ public class GameManager : MonoBehaviour
             {
                 value = 0;
             }
-            else if (value >= 50)
+            else if (value >= 25)
             {
-                value = 50;
+                value = 25;
             }
             else
             {
@@ -102,10 +101,24 @@ public class GameManager : MonoBehaviour
 
         }
     }
-    public float gameTime = 100f;
+    [Range(0,25)]
+    public float gameTime = 25f;
 
     [Header("Game Over Setting")]
     public GameObject gameoverDisplay;
+    public TMP_Text killscoreText;
+    public int totalKillScore
+    {
+        get { return _killScore; }
+        set
+        {
+            _killScore = value;
+            killscoreText.text = _killScore.ToString();
+        }
+
+    }
+    private int _killScore;
+
 
     [HideInInspector]
     public bool buttonPressed;
@@ -256,7 +269,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < totalWaveAmount; i++)
         {
-            GameObject obj = basicEnemyPrefab[Random.Range(0, 3)];
+            GameObject obj = allgameAssetsPrefab[Random.Range(0, 5)];
             startWave.Add(obj);
         }
 
@@ -288,6 +301,7 @@ public class GameManager : MonoBehaviour
 
             if (gameoverDisplay.activeSelf == true)
             {
+               
                 gameoverDisplay.SetActive(false);
             }
         }
